@@ -1,2 +1,4 @@
 Playership	CC0	https://opengameart.org/content/low-spec-airspace-fighter
 Background	CC0	https://opengameart.org/content/space-background-2
+Rock		CC0	https://opengameart.org/content/low-poly-rocks
+Beam		CC0	https://opengameart.org/content/lasers-and-beams

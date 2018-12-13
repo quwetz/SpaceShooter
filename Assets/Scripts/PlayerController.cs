@@ -2,31 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public static class Boundary {
+	public static float minX = -5.3f;
+	public static float maxX = 5.3f;
+	public static float minZ = -2.7f;
+	public static float maxZ = 15.0f;
+}
+
 public class PlayerController : MonoBehaviour
 {
+	//Player components we need to access from this script
+	private Rigidbody rb;
 
-    private Rigidbody rb;
-    public float maxSpeed = 10.0f;
-    public float minX = -5.0f;
-    public float maxX = 5.0f;
-    public float minZ = -10.0f;
-    public float maxZ = 10.0f;
+	//The place where our shots start
+	public Transform ShotSpawn;
+
+	//The gameobject we use for shooting
+	public GameObject shot;
+
+	//The minimum time between two subsequent shots
+	public float reloadTime;
+
+	//The point in time the player is allowed to shoot 
+	//(the player is allowed to shoot if nextShot is smaller than the gametime)
+	private float nextShot;
+    
+	//The maximum horizontal and vertical speed of the player
+	public float maxSpeed;
 
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody> ();
+		nextShot = Time.time;
     }
 
 
+	void Update(){
+		if(Input.GetButton("Fire1")){
+			Shoot();
+		}
+	}
+
     void FixedUpdate()
     {
-
+		//Set the Velocity
         float moveHorizontal = Input.GetAxis("Horizontal") * maxSpeed;
         float moveVertical = Input.GetAxis("Vertical") * maxSpeed;
 
         rb.velocity = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-        rb.position = new Vector3(Mathf.Clamp(rb.position.x, minX, maxX), 0, Mathf.Clamp(rb.position.z, minZ, maxZ));
-    }
+
+		//Clamp the position into the Screen
+        rb.position = new Vector3(Mathf.Clamp(rb.position.x, Boundary.minX, Boundary.maxX), 0, Mathf.Clamp(rb.position.z, Boundary.minZ, Boundary.maxZ));
+	
+		//Set Rotation in relation to the horizontal speed
+		rb.rotation = Quaternion.AngleAxis(-90, new Vector3(1,0,0)) * Quaternion.AngleAxis (35 * Input.GetAxis ("Horizontal"), new Vector3 (0, 1, 0));
+
+	}
+
+	void Shoot(){
+		if (nextShot < Time.time) {
+			Instantiate (shot, ShotSpawn.position, Quaternion.identity);
+			nextShot = Time.time + reloadTime;
+		}
+	}
 }
