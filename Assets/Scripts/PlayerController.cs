@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public static class Boundary {
-	public static float minX = -5.3f;
-	public static float maxX = 5.3f;
-	public static float minZ = -2.7f;
-	public static float maxZ = 15.0f;
-}
 
 public class PlayerController : MonoBehaviour
 {
