@@ -7,6 +7,12 @@ public class PlayerController : MonoBehaviour
 {
 	//Player components we need to access from this script
 	private Rigidbody rb;
+    private AudioSource audioSource;
+
+    //Soundeffect for shooting
+    public AudioClip laserSound;
+    //Soundeffect played on PLayerdeath
+    public AudioClip explosionSound;
 
 	//The place where our shots start
 	public Transform ShotSpawn;
@@ -28,6 +34,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody> ();
+        audioSource = GetComponent<AudioSource>();
 		nextShot = Time.time;
     }
 
@@ -57,8 +64,26 @@ public class PlayerController : MonoBehaviour
 
 	void Shoot(){
 		if (nextShot < Time.time) {
+            audioSource.PlayOneShot(laserSound);
 			Instantiate (shot, ShotSpawn.position, Quaternion.identity);
 			nextShot = Time.time + reloadTime;
 		}
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Hazard")
+        {
+            PlayDeathSound();
+            Destroy(gameObject);
+        }
+    }
+
+    private void PlayDeathSound()
+    {
+        GameObject soundObject = new GameObject();
+        AudioSource sound = soundObject.AddComponent<AudioSource>() as AudioSource;
+        sound.PlayOneShot(explosionSound);
+        Destroy(soundObject, explosionSound.length);
+    }
 }

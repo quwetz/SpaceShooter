@@ -1,4 +1,13 @@
-Playership	CC0	https://opengameart.org/content/low-spec-airspace-fighter
-Background	CC0	https://opengameart.org/content/space-background-2
-Rock		CC0	https://opengameart.org/content/low-poly-rocks
-Beam		CC0	https://opengameart.org/content/lasers-and-beams
+Asset		License		Source											Author
+
+3D Models & 2D Art
+fighter.fbx	CC0		https://opengameart.org/content/low-spec-airspace-fighter				surt
+space1.png	CC0		https://opengameart.org/content/space-background-2					StumpyStrust
+rock_c_01.obj	CC0		https://opengameart.org/content/low-poly-rocks						para
+beam1.tiff	CC0		https://opengameart.org/content/lasers-and-beams					Rawdanitsu
+
+
+Soundeffects
+Laser.mp3	CC0		https://opengameart.org/content/63-digital-sound-effects-lasers-phasers-space-etc	Kenney
+Explosion2.wav	CC BY 3.0	https://opengameart.org/content/rockbreaking						Lamoot
+Explosion1.wav	CC BY 3.0	https://opengameart.org/content/2-high-quality-explosions				Michel Baradari
