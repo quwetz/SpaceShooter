@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 [System.Serializable]
 public static class Boundary {
@@ -22,14 +25,33 @@ public class GameController : MonoBehaviour {
 	//The asteroid gameObject
 	public GameObject Asteroid;
 
+    public Text scoreText;
+    public Text restartText;
+    public Text gameOverText;
+
+    private bool gameOver;
+
+    private int score;
+
 	// Use this for initialization
 	void Start () {
 		//start spawning waves after 3 seconds
 		nextSpawn = Time.time + 3;
+
+        score = 0;
+        UpdateScore();
+        
+        gameOverText.text = "";
+        restartText.text = "";
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(gameOver && Input.GetKeyDown("r"))
+        {
+            SceneManager.LoadScene("Level1");
+        }
 
 		if (Time.time >= nextSpawn) {
 			SpawnAsteroid ();
@@ -42,4 +64,22 @@ public class GameController : MonoBehaviour {
 		Quaternion spawnRotation = Quaternion.identity;
 		return Instantiate (Asteroid, spawnPosition, spawnRotation);
 	}
+
+    void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
+    }
+
+    public void AddScore(int scoreValue)
+    {
+        score += scoreValue;
+        UpdateScore();
+    }
+
+    public void GameOver()
+    {
+        gameOver = true;
+        gameOverText.text = "Game Over";
+        restartText.text = "Press 'r' for Restart";
+    }
 }

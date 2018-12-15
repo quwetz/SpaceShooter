@@ -9,7 +9,7 @@ public class Asteroid : MonoBehaviour {
 
     private AudioSource audioSource;
     private Rigidbody rb;
-
+    private GameController gameController;
 
     
 
@@ -17,12 +17,22 @@ public class Asteroid : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
         audioSource = GetComponent<AudioSource>();
 		rb.velocity = new Vector3 (0, 0, -speed);
+
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        if(gameControllerObject != null)
+        {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        } else
+        {
+            Debug.Log("Cannot find GameController Script");
+        }
 	}
 
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Projectile") {
 			Destroy (other.gameObject);
             PlayDestructionSound();
+            gameController.AddScore(10);
 			Destroy (gameObject);
 		}
 	}

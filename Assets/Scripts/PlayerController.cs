@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 	//Player components we need to access from this script
 	private Rigidbody rb;
     private AudioSource audioSource;
+    private GameController gameController;
 
     //Soundeffect for shooting
     public AudioClip laserSound;
@@ -36,6 +37,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody> ();
         audioSource = GetComponent<AudioSource>();
 		nextShot = Time.time;
+
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        if (gameControllerObject != null)
+        {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        }
+        else
+        {
+            Debug.Log("Cannot find GameController Script");
+        }
     }
 
 
@@ -75,6 +86,7 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Hazard")
         {
             PlayDeathSound();
+            gameController.GameOver();
             Destroy(gameObject);
         }
     }
