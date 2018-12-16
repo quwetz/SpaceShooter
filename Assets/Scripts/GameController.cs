@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//start spawning waves after 3 seconds
+		//start spawning aseroids after 3 seconds
 		nextSpawn = Time.time + 3;
 
         score = 0;
