@@ -33,7 +33,6 @@ public class Asteroid : BrauchtGameController {
     //OnTriggerEnter() wird von Unity aufgerufen, wenn ein anderer Collider mit dem eigenen Collider kollidiert.
     void OnTriggerEnter(Collider other)
     {
-
         //Überprüfe ob das andere Objekt ein Geschoß ist.
         if (other.tag == "Geschoß")
         {

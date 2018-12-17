@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour {
 
     //  Diese Funktion aktualisiert den angezeigten Text des Punktestands. 
     //  Sie muss immer aufgerufen werden, nachdem sich die Punkte geändert haben.
-    void AktualisierePunktestandText()
+    private void AktualisierePunktestandText()
     {
         scoreText.text = "Score: " + punkteStand;
     }

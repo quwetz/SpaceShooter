@@ -8,9 +8,12 @@ public class RotiereZufaellig : MonoBehaviour {
 	public float minGeschwindigkeit;
 	public float maxGeschwindigkeit;
 
-    //Start() wird von Unity aufgerufen, wenn das Object erzeugt wird.
+    // Start() wird von Unity aufgerufen, wenn das Object erzeugt wird.
     void Start () {
-        //Setze die Rotationsgeschwindigkeit zufällig innerhalb der angegebenen min. und max. Geschwindigkeit.
-		GetComponent<Rigidbody> ().angularVelocity = Random.insideUnitSphere * Random.Range (minGeschwindigkeit, maxGeschwindigkeit);	
+
+        // Ermittle eine zufällige Rotationsgeschwindigkeit innerhalb der min. und max. Geschwindigkeit
+        float rotationsgeschwindigkeit = Random.Range(minGeschwindigkeit, maxGeschwindigkeit);
+
+        GetComponent<Rigidbody> ().angularVelocity = Random.insideUnitSphere * rotationsgeschwindigkeit;	
 	}
 }
