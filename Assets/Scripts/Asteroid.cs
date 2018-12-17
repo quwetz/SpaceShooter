@@ -2,46 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Asteroid : MonoBehaviour {
+//  Da in dieser Klasse eine Referenz auf den GameController benötigt wird, erbt sie von "BrauchtGameController".
+//  Dadurch steht die Methode SetzeGameControllerReferenz() und die protected Variable gameController hier zur Verfügung.
+public class Asteroid : BrauchtGameController {
 
-	public float speed;
-    public AudioClip explosionSound;
+    //Die Geschwindigkeit mit der die Asteroiden fliegen
+	public float geschwindigkeit;
 
-    private AudioSource audioSource;
+    //Der Sound der bei der Zerstörung eines Asteroiden abgespielt wird.
+    public AudioClip explosionsSound;
+
+    //Referenz auf den Rigidbody
     private Rigidbody rb;
-    private GameController gameController;
 
-    
 
-	void Start(){
+
+
+    //Start() wird von Unity aufgerufen, wenn das Object erzeugt wird.
+    void Start(){
+        //Setze die Referenz auf den Rigidbody
 		rb = GetComponent<Rigidbody> ();
-        audioSource = GetComponent<AudioSource>();
-		rb.velocity = new Vector3 (0, 0, -speed);
 
-        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
-        if(gameControllerObject != null)
-        {
-            gameController = gameControllerObject.GetComponent<GameController>();
-        } else
-        {
-            Debug.Log("Cannot find GameController Script");
-        }
-	}
+        //Setze die Geschwindigkeit
+		rb.velocity = new Vector3 (0, 0, -geschwindigkeit);
+        
+        //Diese Funktion wird aus der Parent-Klasse "BrauchtGameController" geerbt.
+        SetzeGameControllerReferenz();
+    }
 
-	void OnTriggerEnter(Collider other){
-		if (other.tag == "Projectile") {
-			Destroy (other.gameObject);
-            PlayDestructionSound();
-            gameController.AddScore(10);
-			Destroy (gameObject);
-		}
-	}
-
-    void PlayDestructionSound()
+    //OnTriggerEnter() wird von Unity aufgerufen, wenn ein anderer Collider mit dem eigenen Collider kollidiert.
+    void OnTriggerEnter(Collider other)
     {
-        GameObject soundObject = new GameObject();
-        AudioSource sound = soundObject.AddComponent<AudioSource>() as AudioSource;
-        sound.PlayOneShot(explosionSound, 0.2f);
-        Destroy(soundObject, explosionSound.length);
+
+        //Überprüfe ob das andere Objekt ein Geschoß ist.
+        if (other.tag == "Geschoß")
+        {
+
+            //Lösche das Geschoß
+            Destroy(other.gameObject);
+
+            //Spiele den explosionsSound ab
+            gameController.SpieleSound(explosionsSound, 0.2f);
+
+            //erhöhe den Punktestand
+            gameController.ErhoehePunktestand(10);
+
+            //Lösche den Asteroiden selbst
+            Destroy(gameObject);
+        }
     }
 }
