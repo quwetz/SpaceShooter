@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//  Da in dieser Klasse eine Referenz auf den GameController benötigt wird, erbt sie von "BrauchtGameController".
-//  Dadurch steht die Methode SetzeGameControllerReferenz() und die protected Variable gameController hier zur Verfügung.
-public class PlayerController : BrauchtGameController
+
+public class PlayerController : MonoBehaviour
 {
 	//  Referenz auf den Rigidbody
 	private Rigidbody rb;
@@ -20,6 +19,9 @@ public class PlayerController : BrauchtGameController
 
 	// Das Gameobjekt für das Lasergeschoß
 	public GameObject laserGeschoß;
+
+	// Referenz auf den GameController
+	public GameController gameController;
 
 	//  Die minimale Zeit die vergehen muss, bevor man noch einmal schießen kann
 	public float nachladeZeit;
@@ -38,9 +40,6 @@ public class PlayerController : BrauchtGameController
 
         //  Setze den Zeitpunkt ab dem geschossen werden kann auf die aktuelle Spielzeit
         zeitpunktNaechsterSchuss = Time.time;
-
-        //Diese Funktion wird aus der Parent-Klasse "BrauchtGameController" geerbt.
-        SetzeGameControllerReferenz();
     }
 
     // Update() wird von Unity in jedem Frame einmal aufgerufen
