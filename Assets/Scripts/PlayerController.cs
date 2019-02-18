@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Hindernis")
         {
             // Spiele den Explosionssound ab
-            gameController.SpieleSound(explosionsSound, 1.0f);
+            gameController.SpieleSound(explosionsSound, 0.3f);
 
             // Gib dem GameController bescheid, dass das Spiel zu ende ist.
             gameController.GameOver();
